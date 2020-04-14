@@ -1,0 +1,16 @@
+---
+title: Toggle Component
+date: '2015-05-28'
+---
+
+import React from 'react'
+import Toggle from './Toggle.js'
+
+## this is a toggle switch
+
+```js react-live
+function(){
+  const [isOn, setIsOn] = React.useState(false)
+  return <Toggle isOn={isOn} setIsOn={setIsOn} size="small"/>
+}
+```
