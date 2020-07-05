@@ -1,0 +1,26 @@
+---
+title: 'Navigations'
+---
+import Navigation from './Navigation'
+
+##  Navigation with active link indicator
+
+[create an anchor](#Navigation-with-active-link-indicator)
+``` js react-live
+ function (){
+   const links = [
+        {name:`link1`, link:`/navigations/?link1#navigation-with-active-link-indicator`},
+        {name:`link2`, link:`/navigations/?link2#navigation-with-active-link-indicator`},
+        {name:`link3`, link:`/navigations/?link3#navigation-with-active-link-indicator`},
+        {name:`link4`, link:`/navigations/?link4#navigation-with-active-link-indicator`},
+      ]
+   
+   return (
+     <Navigation  
+      links={links}
+    />
+   )
+ }
+
+```
+click on the links and watch the url bar change
