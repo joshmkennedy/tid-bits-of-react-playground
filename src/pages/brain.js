@@ -2,8 +2,8 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
+import PostCard from '../components/PostCard.js'
 import SEO from '../components/seo'
-import { rhythm } from '../utils/typography'
 
 function BrainDumpArchive({ data, location }) {
   const siteTitle = data.site.siteMetadata.title
@@ -11,29 +11,20 @@ function BrainDumpArchive({ data, location }) {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <SEO
-        title="All posts"
-        keywords={[`blog`, `gatsby`, `javascript`, `react`]}
-      />
-
-      {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
-        return (
-          <div key={node.fields.slug}>
-            <h3
-              style={{
-                marginBottom: rhythm(1 / 4),
-              }}
-            >
-              <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                {title}
-              </Link>
-            </h3>
-            <small>{node.frontmatter.date}</small>
-            <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-          </div>
-        )
-      })}
+      <SEO title="Brain" keywords={[`blog`, `gatsby`, `javascript`, `react`]} />
+      <div className="container">
+        <h2>My Brain Dump</h2>
+        <p>
+          A digital garden. Primarily for me but, there might be some nuggets
+          for everyone.
+        </p>
+        <div className="post-list">
+          {posts.map(({ node }) => {
+            const title = node.frontmatter.title || node.fields.slug
+            return <PostCard post={node} key={title} />
+          })}
+        </div>
+      </div>
     </Layout>
   )
 }
@@ -56,10 +47,12 @@ export const pageQuery = graphql`
           excerpt
           fields {
             slug
+            category
           }
           frontmatter {
             # date(formatString: "MMMM DD, YYYY")
             title
+            tags
           }
         }
       }

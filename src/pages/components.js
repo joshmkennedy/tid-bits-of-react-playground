@@ -2,8 +2,8 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
+import PostCard from '../components/PostCard.js'
 import SEO from '../components/seo'
-import { rhythm } from '../utils/typography'
 
 function ReactComponentArchive({ data, location }) {
   const siteTitle = data.site.siteMetadata.title
@@ -12,28 +12,22 @@ function ReactComponentArchive({ data, location }) {
   return (
     <Layout location={location} title={siteTitle}>
       <SEO
-        title="All posts"
+        title="Components"
         keywords={[`blog`, `gatsby`, `javascript`, `react`]}
       />
-
-      {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
-        return (
-          <div key={node.fields.slug}>
-            <h3
-              style={{
-                marginBottom: rhythm(1 / 4),
-              }}
-            >
-              <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                {title}
-              </Link>
-            </h3>
-            <small>{node.frontmatter.date}</small>
-            <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-          </div>
-        )
-      })}
+      <div className="container">
+        <h2>My Components</h2>
+        <p>
+          A fun playground to build interesting components. Experiment with
+          different apis
+        </p>
+        <div className="post-list">
+          {posts.map(({ node }) => {
+            const title = node.frontmatter.title || node.fields.slug
+            return <PostCard post={node} key={title} />
+          })}
+        </div>
+      </div>
     </Layout>
   )
 }
@@ -56,10 +50,12 @@ export const pageQuery = graphql`
           excerpt
           fields {
             slug
+            category
           }
           frontmatter {
             # date(formatString: "MMMM DD, YYYY")
             title
+            tags
           }
         }
       }

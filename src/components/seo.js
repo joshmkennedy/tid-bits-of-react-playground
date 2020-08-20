@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
 function SEO({ description, lang, meta, keywords, title }) {
+  const [icon, setIcon] = useState('light-icon.svg')
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      // dark mode
+      setIcon('dark-icon.svg')
+    }
+  }, [])
   return (
     <StaticQuery
       query={detailsQuery}
@@ -60,6 +71,7 @@ function SEO({ description, lang, meta, keywords, title }) {
                   : []
               )
               .concat(meta)}
+            link={[{ rel: 'icon', type: 'image/svg+xml', href: `/${icon}` }]}
           />
         )
       }}

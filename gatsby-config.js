@@ -5,7 +5,7 @@ module.exports = {
     description: `The small bit of internet that is written by Josh Kennedy`,
     siteUrl: `https://mycoding.netlify.app/`,
     social: {
-      twitter: `mattinthecouch`,
+      twitter: ``,
     },
   },
   plugins: [
@@ -52,6 +52,15 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         //trackingId: `ADD YOUR TRACKING ID HERE`,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        custom: {
+          families: ['CooperBlack'],
+          urls: ['/fonts/fonts.css'],
+        },
       },
     },
     {
@@ -122,17 +131,17 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        icon: `content/assets/icon.svg`,
       },
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-typography`,
+    //   // options: {
+    //   //   pathToConfigModule: `src/utils/typography`,
+    //   // },
+    // },
     `gatsby-plugin-styled-components`,
   ],
 }

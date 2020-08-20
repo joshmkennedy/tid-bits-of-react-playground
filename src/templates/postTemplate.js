@@ -5,7 +5,6 @@ import Headings from '../components/Headings'
 import Bio from '../components/Bio'
 import Layout from '../components/Layout'
 import SEO from '../components/seo'
-import { rhythm, scale } from '../utils/typography'
 
 class ReactComponentTemplate extends React.Component {
   render() {
@@ -16,44 +15,49 @@ class ReactComponentTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
-        <SEO title={post.frontmatter.title} description={post.excerpt} />
-        <h1>{post.frontmatter.title}</h1>
-        <p
-          style={{
-            display: `block`,
-            marginBottom: rhythm(1),
-            marginTop: rhythm(-1),
-            ...scale(-1 / 5),
-          }}
-        >
-          {post.frontmatter.date}
-        </p>
-        <MDXRenderer scope={{ ...Headings }}>{post.body}</MDXRenderer>
+        <SEO
+          title={post.frontmatter.title}
+          description={post.excerpt}
+          keywords={(post.frontmatter && post.frontmatter.tags) || []}
+        />
+        <div className="container">
+          <h2>{post.frontmatter.title}</h2>
+          <p
+            style={{
+              display: `block`,
+              marginBottom: 20,
+              marginTop: 20,
+            }}
+          >
+            {post.frontmatter.date}
+          </p>
+          <MDXRenderer scope={{ ...Headings }}>{post.body}</MDXRenderer>
 
-        <ul
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
-        >
-          <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
+          <ul
+            style={{
+              display: `flex`,
+              flexWrap: `wrap`,
+              justifyContent: `space-between`,
+              listStyle: `none`,
+              padding: 0,
+            }}
+          >
+            <li>
+              {previous && (
+                <Link to={previous.fields.slug} rel="prev">
+                  ← {previous.frontmatter.title}
+                </Link>
+              )}
+            </li>
+            <li>
+              {next && (
+                <Link to={next.fields.slug} rel="next">
+                  {next.frontmatter.title} →
+                </Link>
+              )}
+            </li>
+          </ul>
+        </div>
       </Layout>
     )
   }
@@ -74,7 +78,8 @@ export const pageQuery = graphql`
       excerpt(pruneLength: 160)
       frontmatter {
         title
-        # date(formatString: "MMMM DD, YYYY")
+        tags
+        date(formatString: "MMMM DD, YYYY")
       }
       body
     }

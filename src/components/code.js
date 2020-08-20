@@ -54,13 +54,13 @@ const LiveCodeBlock = styled.div`
 `
 const LiveComponent = styled.div`
   padding: 10px;
+  background: white;
   .preview__label {
     margin-top: -10px;
     margin-left: -10px;
     margin-right: -10px;
     padding: 10px;
     background: #f9f9f9;
-    font-family: 'Montserrat';
     font-weight: 700;
     margin-bottom: 10px;
   }
@@ -68,6 +68,7 @@ const LiveComponent = styled.div`
 
 const CodeBlock = styled.pre`
   padding: 10px;
+  overflow-x: scroll;
   border-radius: 8px;
   box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1),
     0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
