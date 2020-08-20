@@ -62,7 +62,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     })
 
     const category = getCategoryDirectory(node)
-    console.log(category)
+
     createNodeField({
       name: `category`,
       node,
