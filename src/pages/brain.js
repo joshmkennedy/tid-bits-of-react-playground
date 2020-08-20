@@ -49,7 +49,7 @@ export const pageQuery = graphql`
     }
     allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { category: { eq: "Brain Dump" } } }
+      filter: { fields: { category: { eq: "brain" } } }
     ) {
       edges {
         node {

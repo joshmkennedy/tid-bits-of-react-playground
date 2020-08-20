@@ -14,10 +14,10 @@ exports.createPages = ({ graphql, actions }) => {
               id
               fields {
                 slug
+                category
               }
               frontmatter {
                 title
-                category
               }
               body
             }
@@ -60,6 +60,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       node,
       value,
     })
+
+    const category = getCategoryDirectory(node)
+    console.log(category)
+    createNodeField({
+      name: `category`,
+      node,
+      value: category,
+    })
   }
 }
 
@@ -67,7 +75,7 @@ function getNextInCategory(post, index, posts) {
   const possibleNext = getNext(index, posts)
   if (
     !possibleNext ||
-    possibleNext.frontmatter.category === post.node.frontmatter.category
+    possibleNext.fields.category === post.node.fields.category
   ) {
     return possibleNext
   } else {
@@ -79,7 +87,7 @@ function getPreviousInCategory(post, index, posts) {
   const possiblePrevious = getPrevious(index, posts)
   if (
     !possiblePrevious ||
-    possiblePrevious.frontmatter.category === post.node.frontmatter.category
+    possiblePrevious.fields.category === post.node.fields.category
   ) {
     return possiblePrevious
   } else {
@@ -93,4 +101,10 @@ function getNext(index, posts) {
 
 function getPrevious(index, posts) {
   return index === posts.length - 1 ? null : posts[index + 1].node
+}
+
+function getCategoryDirectory(node) {
+  const regex = /content\/(?<category>[a-z|-]+)\//
+  const results = regex.exec(node.fileAbsolutePath)
+  return results.groups.category
 }

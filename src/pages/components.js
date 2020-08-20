@@ -49,7 +49,7 @@ export const pageQuery = graphql`
     }
     allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { category: { eq: "React Component" } } }
+      filter: { fields: { category: { eq: "components" } } }
     ) {
       edges {
         node {

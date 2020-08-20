@@ -72,7 +72,7 @@ export const pageQuery = graphql`
     }
     fiveReactComponents: allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { category: { eq: "React Component" } } }
+      filter: { fields: { category: { eq: "components" } } }
       limit: 5
     ) {
       nodes {
@@ -88,7 +88,7 @@ export const pageQuery = graphql`
     }
     fiveBrainDumps: allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { category: { eq: "Brain Dump" } } }
+      filter: { fields: { category: { eq: "brain" } } }
       limit: 5
     ) {
       nodes {
