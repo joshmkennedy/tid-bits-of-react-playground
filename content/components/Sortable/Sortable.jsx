@@ -27,6 +27,7 @@ function Sortable({className}){
   // `Item` should swap places with its siblings.
   const positions = useRef([]).current;
   const setPosition = (i, offset) => (positions[i] = offset);
+  
   const moveItem = (i, dragOffset) => {
     const targetIndex = findIndex(i, dragOffset, positions);
     if (targetIndex !== i) setColors(move(colors, i, targetIndex));
@@ -69,20 +70,29 @@ function ColorBar({color, setPosition, moveItem, i}){
     style={{
       background:color,
       color:`white`,
-      textAlign:`center`
+      textAlign:`center`,
+      marginBottom:`8px`,
+      padding:`16px 0`,
+      borderRadius:8,
     }}
     ref={ref}
     initial={false}
-    animate={isDragging ? onTop : flat}
-    whileHover={{ scale: 1.03 }}
-    whileTap={{ scale: 1.12 }}
+    //
+    whileHover={{ rotateX:`-10deg` }}
+    whileTap={{ scale: 1.05, rotateX:`-10deg` }}
+    //
     drag="y"
-    dragOriginY={dragOriginY}
+    //
     dragConstraints={{ top: 0, bottom: 0 }}
     dragElastic={1}
+    //
+    animate={isDragging ? onTop : flat}
+    //
     onDragStart={() => setDragging(true)}
+    onDrag={(e, stuff) => moveItem(i, stuff.point.y)}
     onDragEnd={() => setDragging(false)}
-    onDrag={(e, { point }) => moveItem(i, point.y)}
+    //
+    dragOriginY={dragOriginY}
     positionTransition={({delta}) => {
       if (isDragging) {
         // If we're dragging, we want to "undo" the items movement within the list
@@ -110,7 +120,11 @@ const flat = {
 export default styled(Sortable)`
   position:relative;
   font-family: 'Montserrat', sans-serif;
+  padding:0 10px;
+  perspective:900;
   > div {
     position: relative;
+    perspective:900;
+    transform-style:preserve-3d;
   }
 `

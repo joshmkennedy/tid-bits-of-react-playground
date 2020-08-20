@@ -1,0 +1,31 @@
+---
+title: Parse Html From Ajax
+date: '2020-08-07'
+category: Brain Dump
+tags: ['html', 'js', 'fetch']
+---
+
+How to fetch html and parse only a peice of it
+
+```js
+fetch('/about')
+  .then(function(response) {
+    // The API call was successful!
+    return response.text()
+  })
+  .then(function(html) {
+    // Convert the HTML string into a document object
+    var parser = new DOMParser()
+    var doc = parser.parseFromString(html, 'text/html')
+
+    // Get the image file
+    var img = doc.querySelector('img')
+    console.log(img)
+  })
+  .catch(function(err) {
+    // There was an error
+    console.warn('Something went wrong.', err)
+  })
+```
+
+this was taken from [gomakethings.com](https://gomakethings.com/getting-html-with-fetch-in-vanilla-js/)

@@ -1,0 +1,140 @@
+---
+title: Screen Wake Lock
+category: Brain Dump
+tags: [browser, js]
+date: '2020-08-13'
+---
+
+To get the request body of a request in php you
+
+```js
+function initDeviceCaffeine(mountingSelector) {
+  const mountNode = document.querySelector(mountingSelector)
+
+  if (!mountNode) return
+
+  const toggleEl = createToggle()
+  addWakeLockHandler(toggleEl, 'change')
+
+  mountNode.appendChild(toggleEl)
+}
+
+function createToggle() {
+  const toggle = document.createElement('div')
+  toggle.classList.add('wake-lock-toggle')
+  toggle.innerHTML = `<label class="toggle__label">
+        <input type="checkbox" name="" id="" class="toggle__checkbox" />
+        <div class="toggle__wrapper">
+          <div class="toggle__bg"></div>
+          <div class="toggle__switch"></div>
+        </div>
+      </label>`
+
+  return toggle
+}
+
+function addWakeLockHandler(el, event) {
+  let wakeLock
+  el.addEventListener(event, async function(e) {
+    if (e.target.checked) {
+      wakeLock = await navigator.wakeLock.request('screen').then(res => res)
+      //if some other force stops this, give user feed back
+      wakeLock.onrelease = unCheck
+    } else {
+      wakeLock.release()
+    }
+  })
+}
+
+function unCheck(e) {
+  e.target.checked = false
+}
+
+initDeviceCaffeine('.place-toggle')
+```
+
+```css
+.wake-lock-toggle {
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.wake-lock-toggle * {
+  box-sizing: inherit;
+}
+.wake-lock-toggle input {
+  width: 0;
+  height: 0;
+  display: none;
+}
+.wake-lock-toggle label {
+  display: inline-flex;
+  align-items: center;
+}
+.wake-lock-toggle input:checked ~ .toggle__wrapper {
+  box-shadow: 0 0 0 2px #44da60;
+}
+.wake-lock-toggle input:checked ~ .toggle__wrapper .toggle__switch {
+  right: 0;
+}
+.wake-lock-toggle input:checked ~ .toggle__wrapper .toggle__bg {
+  border: 1px solid #44da60;
+  transition: none;
+  background: #44da60;
+}
+.wake-lock-toggle input:checked ~ .toggle__wrapper .toggle__bg:after {
+  transition-delay: 0.05s, 0s;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.toggle__wrapper {
+  margin-left: 1em;
+  position: relative;
+  height: 2em;
+  width: 3.3em;
+  overflow: visible;
+  border-radius: 2.5em;
+  box-shadow: 0 0 0 2px #dfdfdf;
+}
+
+.toggle__bg {
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  background: transparent;
+  height: 100%;
+  border-radius: 2.5em;
+  transition: all 0s linear 0.2s;
+}
+.toggle__bg:after {
+  transition: all 0.2s linear;
+  transition-property: transform, opacity;
+  transition-delay: 0s, 0.02s;
+  content: '';
+  position: absolute;
+  border-radius: inherit;
+  width: 103%;
+  height: 103%;
+  background: #efeff9;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  transform-origin: 50% 50%;
+  opacity: 1;
+}
+
+.toggle__switch {
+  position: absolute;
+  z-index: 200;
+  border-radius: 50%;
+  background: white;
+  width: 2em;
+  height: 100%;
+  box-shadow: 0.5px 1px 2px #dedede;
+  right: calc(100% - 2em);
+  transition: all 0.15s cubic-bezier(0.5, 1, 0.5, 1);
+}
+```

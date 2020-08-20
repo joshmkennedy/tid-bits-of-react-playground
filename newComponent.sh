@@ -18,6 +18,8 @@ touch index.mdx
 
 echo '---' >> index.mdx
 echo 'title: ' $1 >> index.mdx
+echo 'category:  React Component' >> index.mdx
+echo 'tags: ' >> index.mdx
 echo '---' >> index.mdx
 echo '' >> index.mdx
 echo 'import '$1' from "./'$1'.jsx"' >> index.mdx

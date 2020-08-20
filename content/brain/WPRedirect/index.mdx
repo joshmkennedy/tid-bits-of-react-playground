@@ -1,0 +1,18 @@
+---
+title: How to Quick and Easy Redirect In Wordpress With Cookies
+date: '2020-08-11'
+category: Brain Dump
+tags: ['php', 'wp', 'cookies', 'redirect']
+---
+
+This is a super simple snippet that redirects a user and gives them a cookie so it only happens once per user
+
+```php
+add_action( 'template_redirect', function () {
+	if ( is_front_page() && !isset($_COOKIE['seen_splash_page']) ) {
+		setcookie('seen_splash_page', true, time() + (86400 * 365 * 2), "/"); // 2 years
+        wp_redirect( home_url( '/wp-admin/' ) );
+        die;
+    }
+} );
+```

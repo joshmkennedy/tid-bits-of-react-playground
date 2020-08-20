@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Tid Bits Of React`,
+    title: `Josh Kennedy`,
     author: `Josh Kennedy`,
-    description: `A list of React Components that Im playing with`,
+    description: `The small bit of internet that is written by Josh Kennedy`,
     siteUrl: `https://TBD.netlify.com/`,
     social: {
       twitter: `mattinthecouch`,
@@ -12,15 +12,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/components`,
-        name: `components`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/content/assets`,
-        name: `assets`,
+        path: `${__dirname}/content`,
+        name: `content`,
       },
     },
     {
@@ -115,7 +108,7 @@ module.exports = {
             }
             `,
             output: '/rss.xml',
-            title: 'Gatsby RSS feed',
+            title: "Josh's Brain Rss Feed",
           },
         ],
       },

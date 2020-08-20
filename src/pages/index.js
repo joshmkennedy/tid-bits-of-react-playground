@@ -6,40 +6,59 @@ import Layout from '../components/Layout'
 import SEO from '../components/seo'
 import { rhythm } from '../utils/typography'
 
-class BlogIndex extends React.Component {
-  render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMdx.edges
-
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO
-          title="All posts"
-          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
-        />
-
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug
+function BlogIndex({ data, location }) {
+  const siteTitle = data.site.siteMetadata.title
+  const { fiveReactComponents, fiveBrainDumps } = data
+  return (
+    <Layout location={location} title={siteTitle}>
+      <SEO
+        title="All posts"
+        keywords={[`blog`, `gatsby`, `javascript`, `react`]}
+      />
+      <Link to={`/components`}>
+        <h2>Component Exploration</h2>
+      </Link>
+      <ul style={{ listStyle: `none`, marginLeft: `10px`, marginBottom: 50 }}>
+        {fiveReactComponents.nodes.map(({ frontmatter, excerpt, fields }) => {
+          const { title } = frontmatter
           return (
-            <div key={node.fields.slug}>
+            <li key={fields.slug}>
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
+                <Link style={{ boxShadow: `none` }} to={fields.slug}>
                   {title}
                 </Link>
               </h3>
-              <small>{node.frontmatter.date}</small>
-              <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-            </div>
+            </li>
           )
         })}
-      </Layout>
-    )
-  }
+      </ul>
+      <Link to={`/brain`}>
+        <h2>Brain Dumps</h2>
+      </Link>
+      <ul style={{ listStyle: `none`, marginLeft: `10px` }}>
+        {fiveBrainDumps.nodes.map(({ frontmatter, excerpt, fields }) => {
+          const { title } = frontmatter
+          return (
+            <li key={fields.slug}>
+              <h3
+                style={{
+                  marginBottom: rhythm(1 / 4),
+                }}
+              >
+                <Link style={{ boxShadow: `none` }} to={fields.slug}>
+                  {title}
+                </Link>
+              </h3>
+            </li>
+          )
+        })}
+      </ul>
+    </Layout>
+  )
 }
 
 export default BlogIndex
@@ -51,17 +70,35 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-          }
+    fiveReactComponents: allMdx(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { category: { eq: "React Component" } } }
+      limit: 5
+    ) {
+      nodes {
+        excerpt
+        fields {
+          slug
+        }
+        frontmatter {
+          # date(formatString: "MMMM DD, YYYY")
+          title
+        }
+      }
+    }
+    fiveBrainDumps: allMdx(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { category: { eq: "Brain Dump" } } }
+      limit: 5
+    ) {
+      nodes {
+        excerpt
+        fields {
+          slug
+        }
+        frontmatter {
+          # date(formatString: "MMMM DD, YYYY")
+          title
         }
       }
     }
