@@ -17,6 +17,7 @@ exports.createPages = ({ graphql, actions }) => {
               }
               frontmatter {
                 title
+                category
               }
               body
             }
@@ -33,8 +34,8 @@ exports.createPages = ({ graphql, actions }) => {
     const posts = result.data.allMdx.edges
 
     posts.forEach((post, index) => {
-      const previous = index === posts.length - 1 ? null : posts[index + 1].node
-      const next = index === 0 ? null : posts[index - 1].node
+      const previous = getPreviousInCategory(post, index, posts)
+      const next = getNextInCategory(post, index, posts)
 
       createPage({
         path: post.node.fields.slug,
@@ -60,4 +61,36 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value,
     })
   }
+}
+
+function getNextInCategory(post, index, posts) {
+  const possibleNext = getNext(index, posts)
+  if (
+    !possibleNext ||
+    possibleNext.frontmatter.category === post.node.frontmatter.category
+  ) {
+    return possibleNext
+  } else {
+    getNextInCategory(post, index + 1, posts)
+  }
+}
+
+function getPreviousInCategory(post, index, posts) {
+  const possiblePrevious = getPrevious(index, posts)
+  if (
+    !possiblePrevious ||
+    possiblePrevious.frontmatter.category === post.node.frontmatter.category
+  ) {
+    return possiblePrevious
+  } else {
+    getPreviousInCategory(post, index + 1, posts)
+  }
+}
+
+function getNext(index, posts) {
+  return index === 0 ? null : posts[index - 1].node
+}
+
+function getPrevious(index, posts) {
+  return index === posts.length - 1 ? null : posts[index + 1].node
 }

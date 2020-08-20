@@ -3,7 +3,7 @@ module.exports = {
     title: `Josh Kennedy`,
     author: `Josh Kennedy`,
     description: `The small bit of internet that is written by Josh Kennedy`,
-    siteUrl: `https://TBD.netlify.com/`,
+    siteUrl: `https://mycoding.netlify.app/`,
     social: {
       twitter: `mattinthecouch`,
     },

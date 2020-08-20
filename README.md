@@ -17,7 +17,6 @@ I want to this site to be a resource for me first and then others. This is not a
 
 
 ## TODOs
-- Fix the pagination links to only go to next in category.
 - style the site.
 - add a search feature.
 - make it easier to write posts
