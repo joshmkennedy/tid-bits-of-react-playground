@@ -1,0 +1,13 @@
+---
+title: %TITLE%
+date: '%DATE%'
+tags: []
+---
+
+Example explanation of the code below.
+
+```js
+  window.alert('new brain dump')
+```
+
+delete this text and start dumping
