@@ -4,7 +4,7 @@ export default function useSearch(posts) {
   const [searchString, setSearchString] = useState('')
   const [filteredPosts, setFilteredPosts] = useState(posts)
   const [availableTags, setAvailableTags] = useState([])
-  const [activeTags, setActiveTags] = useState(['browser'])
+  const [activeTags, setActiveTags] = useState([])
 
   useEffect(() => {
     const querySearch = getParameterByName('s')
