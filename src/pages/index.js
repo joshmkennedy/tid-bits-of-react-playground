@@ -1,53 +1,24 @@
-import React, { useState } from 'react'
-import { Link, graphql } from 'gatsby'
+import React from 'react'
+import { graphql } from 'gatsby'
 import PostCard from '../components/PostCard'
-import Bio from '../components/Bio'
+import PostFilter from '../components/PostFilter.js'
+import useSearch from '../hooks/useSearch.js'
 import Layout from '../components/Layout'
 import SEO from '../components/seo'
 
 function BlogIndex({ data, location }) {
   const siteTitle = data.site.siteMetadata.title
-  const [searchString, setSearchString] = useState('')
-  function search(needle, haystack) {
-    return haystack.toLowerCase().includes(needle.toLowerCase())
-  }
-  function filterFn(post) {
-    if (searchString.length < 2) return true
-    const {
-      frontmatter: { title, tags },
-    } = post
-    if (search(searchString, title)) {
-      return true
-    }
-
-    if (tags) {
-      for (let i = 0; i < tags.length; i++) {
-        const tag = tags[i]
-        if (tag.toLowerCase().includes(searchString.toLowerCase())) {
-          console.log(post)
-          console.log(tag)
-          return true
-        }
-      }
-    }
-  }
+  const { searchString, setSearchString, filterFn } = useSearch()
 
   const { allMdx } = data
   return (
     <Layout location={location} title={siteTitle}>
-      <div className="container">
+      <div className="container" style={{ paddingTop: `40px` }}>
         <SEO
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
-        <form onSubmit={e => e.preventDefault()}>
-          <input
-            type="search"
-            name="search"
-            id="search"
-            onChange={e => setSearchString(e.target.value)}
-          />
-        </form>
+        <PostFilter value={searchString} setValue={setSearchString} />
         <ul className="post-list">
           {allMdx.nodes.filter(filterFn).map(post => {
             return (

@@ -4,10 +4,11 @@
   --blue: #3f6686;
   --olive: #659899;
   --lightolive: #8ca7a0;
-  --sand: #d5af99;
+  --sand: #e4ccbe;
   --lightsand: #f7eeea;
   --pink: #ac7880;
   --black: #0b0329;
+  --offwhite: #fff9f6;
 
   /*lightmode */
   --body-bg: var(--lightsand);
