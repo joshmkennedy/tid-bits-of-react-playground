@@ -8,9 +8,15 @@ import SEO from '../components/seo'
 
 function BlogIndex({ data, location }) {
   const siteTitle = data.site.siteMetadata.title
-  const { searchString, setSearchString, filterFn } = useSearch()
+  const {
+    searchString,
+    setSearchString,
+    filteredPosts,
+    availableTags,
+    activeTags,
+    setActiveTags,
+  } = useSearch(data.allMdx.nodes)
 
-  const { allMdx } = data
   return (
     <Layout location={location} title={siteTitle}>
       <div className="container" style={{ paddingTop: `40px` }}>
@@ -18,9 +24,15 @@ function BlogIndex({ data, location }) {
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
-        <PostFilter value={searchString} setValue={setSearchString} />
+        <PostFilter
+          value={searchString}
+          setValue={setSearchString}
+          tags={availableTags}
+          activeTags={activeTags}
+          setActiveTags={setActiveTags}
+        />
         <ul className="post-list">
-          {allMdx.nodes.filter(filterFn).map(post => {
+          {filteredPosts.map(post => {
             return (
               <li key={post.fields.slug}>
                 <PostCard post={post} />
