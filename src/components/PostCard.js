@@ -48,7 +48,12 @@ export default styled(PostCard)`
     padding: 0 5px;
     background: var(--body-bg);
     margin-bottom: 20px;
-    color: var(--text-color);
+    border-radius: 4px;
+    &:hover {
+      color: var(--text-color);
+      text-decoration: none;
+      border: 1px solid var(--blue);
+    }
   }
   .tag {
     display: inline-flex;
