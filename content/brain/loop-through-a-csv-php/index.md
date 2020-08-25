@@ -6,6 +6,10 @@ tags: [php, upload files, CSV, read file]
 
 ### TLDR;
 
+```php
+$rows = array_map( 'str_getcsv', file( $_FILES['csv']['tmp_name'] ) );
+```
+
 When you need to import a large amount data, you might want to provide the ability to allow an upload of a csv file. Here is how you can do it.
 
 ### Starting from the Frontend side.
