@@ -7,9 +7,8 @@ import { useMDXScope } from 'gatsby-plugin-mdx/context'
 
 export const Code = ({ codeString, language, ...props }) => {
   if (props['react-live']) {
-    console.log(defaultProps)
     const components = useMDXScope()
-    console.log(codeString)
+
     return (
       <LiveCodeBlock>
         <LiveProvider

@@ -30,41 +30,55 @@ function BeatSequencer({className, kickTrack = KICK_WAV, clapTrack = CLAP_WAV, h
   const [playing, setPlaying] = useState(false)
   const [steps, setSteps] = useState(initialSteps)
   const stepIndex = useRef(0)
-
-  const drums = useMemo(()=>new Tone.Sampler({
-    c0: kickTrack,
-    d0: hatTrack,
-    e0: clapTrack,
-  }).toMaster()
+  
+  
+  const drums = useMemo(()=>{
+    if(typeof window === 'undefined') return null
+    return  new Tone.Sampler({
+      c0: kickTrack,
+      d0: hatTrack,
+      e0: clapTrack,
+    }).toMaster() 
+  }
   ,[])
-const synth = useMemo(()=>new Tone.PolySynth().toDestination(),[])
+  const synth = useMemo(()=>{
+    if(typeof window === 'undefined') return null
+    return new Tone.PolySynth().toDestination()
+  },[])
+  
   
   useEffect(() => {
-    if (playing) {
-      Tone.Transport.start();
-    } else {
-      Tone.Transport.stop();
+    if(typeof window !== 'undefined') {
+
+      if (playing) {
+        Tone.Transport.start();
+      } else {
+        Tone.Transport.stop();
+      }
     }
   }, [playing]);
 
   useEffect(() => {
-    Tone.Transport.cancel();
-    Tone.Transport.scheduleRepeat(function (time) {
-      steps.forEach((track, index) => {
-        let step = track.steps[stepIndex.current];
-        if (step === 1) {
-          if (index === 3) {
-            let chord =
-              stepIndex.current < 7 ? ["c4", "d#4", "g4"] : ["a#3", "d4", "g4"];
-            synth.triggerAttackRelease(chord, 0.5);
-          } else {
-            drums.triggerAttack(trackIndex[index]);
-          }
-        }
-      });
+    if(typeof window !== 'undefined'){
 
-      stepIndex.current = stepIndex.current > 14 ? 0 : stepIndex.current + 1;
-    }, "18n");
+      Tone.Transport.cancel();
+      Tone.Transport.scheduleRepeat(function (time) {
+        steps.forEach((track, index) => {
+          let step = track.steps[stepIndex.current];
+          if (step === 1) {
+            if (index === 3) {
+              let chord =
+              stepIndex.current < 7 ? ["c4", "d#4", "g4"] : ["a#3", "d4", "g4"];
+              synth.triggerAttackRelease(chord, 0.5);
+            } else {
+              drums.triggerAttack(trackIndex[index]);
+            }
+          }
+        });
+        
+        stepIndex.current = stepIndex.current > 14 ? 0 : stepIndex.current + 1;
+      }, "18n");
+    }
   }, [tracks]);
 
   function toggleTrack(){
@@ -74,7 +88,7 @@ const synth = useMemo(()=>new Tone.PolySynth().toDestination(),[])
 
     setSteps((tracks)=>{
       const newTracks = [...tracks]
-      console.log(newTracks[trackIndex].steps[stepIndex])
+      
       newTracks[trackIndex].steps[stepIndex] = newTracks[trackIndex].steps[stepIndex] === 0 ? 1 : 0
       return newTracks
     })

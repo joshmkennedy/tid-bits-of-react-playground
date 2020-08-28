@@ -21,7 +21,7 @@ export default function Toggle({
           id={checkBoxId.current}
           value={isOn}
           onChange={e => {
-            console.log(e.currentTarget)
+            
             setIsOn(!isOn)
           }}
         />

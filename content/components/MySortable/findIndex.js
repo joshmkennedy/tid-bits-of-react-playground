@@ -28,6 +28,6 @@ export const findIndex = (
     const swapOffset = distance(left, prevRight - prevItem.width / 2) + buffer;
     if (xOffset < -swapOffset) target = i - 1;
   }
-  console.log('ram')
+
   return clamp(0, positions.length, target);
 };

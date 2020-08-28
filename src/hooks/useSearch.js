@@ -20,7 +20,7 @@ export default function useSearch(posts) {
     const {
       frontmatter: { title, tags },
     } = post
-    console.log()
+
     if (activeTags.length >= 1) {
       for (let i = 0; i < activeTags.length; i++) {
         const tag = activeTags[i]

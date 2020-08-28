@@ -134,7 +134,7 @@ height:10px;
   
 }
 ${({activeRect, beforeRef, afterRef})=>afterRef.current && css`
-  ${console.log({active:activeRect, before:beforeRef.current.getBoundingClientRect().x, after:afterRef.current.getBoundingClientRect().x})}
+  
   .beforeActive{
     transform:translateX(${beforeRef.current.getBoundingClientRect().x - activeRect.x  }px);
   }
