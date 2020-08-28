@@ -62,14 +62,27 @@ h5 {
   --heading-color: var(--blue);
 }
 h2 {
-  font-size: 3rem;
+  font-size: 2rem;
 }
+@media (min-width: 762px) {
+  h2 {
+    font-size: 3rem;
+  }
+}
+
 h2,
 header h1 {
   text-shadow: -2px 2px var(--text-shadow-color, var(--sand));
 }
-h3 {
-  font-size: 2rem;
+h3,
+h1 {
+  font-size: 1.34rem;
+}
+@media (min-width: 762px) {
+  h3,
+  h1 {
+    font-size: 2rem;
+  }
 }
 
 body {
@@ -141,8 +154,8 @@ footer {
   padding-right: 20px;
 }
 .container {
-  width: 100%;
   max-width: var(--content-mx-width);
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -155,3 +168,11 @@ ul {
 .post-list {
   padding-top: 50px;
 }
+
+.app {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+/* * {
+  overflow-x: hidden;
+} */

@@ -5,7 +5,7 @@ import './styles.css'
 function Layout(props) {
   const { title, children } = props
   return (
-    <div>
+    <div className={'app'}>
       <header>
         <div className="container">
           <h1>

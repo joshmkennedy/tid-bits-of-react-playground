@@ -36,10 +36,10 @@ export default styled(PostCard)`
   }
   ul {
     display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
   }
-  li + li {
-    margin-left: 5px;
-  }
+
   .category {
     display: block;
     position: absolute;
@@ -56,7 +56,7 @@ export default styled(PostCard)`
     }
   }
   .tag {
-    display: inline-flex;
+    display: block;
     padding: 2px 5px;
     background: var(--sand);
     color: var(--darkblue);

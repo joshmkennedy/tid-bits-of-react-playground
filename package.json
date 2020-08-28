@@ -40,7 +40,8 @@
     "react-dom": "^16.5.1",
     "react-helmet": "^5.2.0",
     "react-live": "^2.2.0",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "tone": "^14.7.39"
   },
   "devDependencies": {
     "eslint": "^6.2.2",

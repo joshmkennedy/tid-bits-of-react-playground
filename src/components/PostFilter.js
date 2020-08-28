@@ -97,6 +97,7 @@ export default styled(PostFilter)`
     font-size: 16px;
     border-radius: 3px;
     opacity: 0.589;
+    white-space: nowrap;
     &:hover {
       opacity: 1;
     }
