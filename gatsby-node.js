@@ -1,10 +1,20 @@
-/* eslint-disable */
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+
+// exports.sourceNodes = ({ actions }) => {
+//   actions.createTypes(`
+//     type Gist implements Node @dontInfer {
+//       id: ID!
+//       name: String!
+//     }
+//   `)
+// }
+
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
 
   const blogPost = path.resolve(`./src/templates/postTemplate.js`)
+  const gistTemplate = path.resolve(`./src/templates/gistTemplate.js`)
   return graphql(
     `
       {
@@ -25,6 +35,18 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     `
+    // github {
+    //       viewer {
+    //         gists(last: 100) {
+    //           nodes {
+    //             name
+    //             files {
+    //               name
+    //             }
+    //           }
+    //         }
+    //       }
+    //     }
   ).then(result => {
     if (result.errors) {
       throw result.errors
@@ -32,7 +54,7 @@ exports.createPages = ({ graphql, actions }) => {
 
     // Create blog posts pages.
     const posts = result.data.allMdx.edges
-
+    const gists = result.data.github && result.data.github.viewer.gists.nodes
     posts.forEach((post, index) => {
       const previous = getPreviousInCategory(post, index, posts)
       const next = getNextInCategory(post, index, posts)
@@ -47,6 +69,23 @@ exports.createPages = ({ graphql, actions }) => {
         },
       })
     })
+
+    gists &&
+      gists.forEach((gist, index) => {
+        const previous = getPrevious(index, gists)
+        const next = getNext(index, gists)
+        const slug = createGistSlug(gist.files[0].name)
+        createPage({
+          path: `/gists/${slug || gist.name}`,
+          component: gistTemplate,
+          context: {
+            name: gist.name,
+            previous,
+            next,
+          },
+        })
+      })
+    //end of create pages
   })
 }
 
@@ -107,4 +146,12 @@ function getCategoryDirectory(node) {
   const regex = /content\/(?<category>[a-z|-]+)\//
   const results = regex.exec(node.fileAbsolutePath)
   return results.groups.category
+}
+
+function createGistSlugFromNode(node) {}
+function createGistSlug(fileName) {
+  if (!fileName) return null
+
+  const slug = fileName.split('.')[0]
+  return slug
 }
