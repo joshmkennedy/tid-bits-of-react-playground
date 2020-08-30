@@ -56,6 +56,11 @@ function BeatSequencer({className, kickTrack = KICK_WAV, clapTrack = CLAP_WAV, h
         Tone.Transport.stop();
       }
     }
+    return ()=>{
+      if(typeof window !== 'undefined') {
+        Tone.Transport.stop();
+      }
+    }
   }, [playing]);
 
   useEffect(() => {
