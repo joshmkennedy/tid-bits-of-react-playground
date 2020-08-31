@@ -1,15 +1,6 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-// exports.sourceNodes = ({ actions }) => {
-//   actions.createTypes(`
-//     type Gist implements Node @dontInfer {
-//       id: ID!
-//       name: String!
-//     }
-//   `)
-// }
-
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -17,7 +8,7 @@ exports.createPages = ({ graphql, actions }) => {
   const gistTemplate = path.resolve(`./src/templates/gistTemplate.js`)
   return graphql(
     `
-      {
+      query {
         allMdx(limit: 1000, sort: { fields: frontmatter___date, order: DESC }) {
           edges {
             node {
@@ -33,20 +24,20 @@ exports.createPages = ({ graphql, actions }) => {
             }
           }
         }
+        github {
+          viewer {
+            gists(last: 100) {
+              nodes {
+                name
+                files {
+                  name
+                }
+              }
+            }
+          }
+        }
       }
     `
-    // github {
-    //       viewer {
-    //         gists(last: 100) {
-    //           nodes {
-    //             name
-    //             files {
-    //               name
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
   ).then(result => {
     if (result.errors) {
       throw result.errors
@@ -110,6 +101,56 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    GitHub_Gist: {
+      description: {
+        resolve: (source, args, context, info) => {
+          return source.description && gistDescription(source.description)
+        },
+      },
+      createdAt: {
+        type: 'Date',
+        args: {
+          toLocalDateString: {
+            type: 'Boolean',
+          },
+        },
+        resolve: async (source, args, context, info) => {
+          if (args.toLocalDateString) {
+            return new Date(source.createdAt).toLocaleDateString()
+          }
+          return createdAt
+        },
+      },
+      category: {
+        type: 'String',
+        resolve: () => 'gist',
+      },
+      title: {
+        type: 'String',
+        resolve: source => {
+          return source.files[0].name
+        },
+      },
+      slug: {
+        type: 'String',
+        resolve: source => {
+          const slug = createGistSlug(source.files[0].name)
+          return `/gists/${slug}`
+        },
+      },
+      tags: {
+        type: ['String'],
+        resolve: async (source, args, context, info) => {
+          return source.description && gistTags(source.description)
+        },
+      },
+    },
+  }
+  createResolvers(resolvers)
+}
+
 function getNextInCategory(post, index, posts) {
   const possibleNext = getNext(index, posts)
   if (
@@ -154,4 +195,14 @@ function createGistSlug(fileName) {
 
   const slug = fileName.split('.')[0]
   return slug
+}
+
+function gistDescription(raw) {
+  return raw.split('::')[0].trim()
+}
+function gistTags(raw) {
+  const rawTags = raw.split('::')
+  rawTags.shift()
+  const tags = rawTags.map(tag => tag.trim())
+  return tags
 }
