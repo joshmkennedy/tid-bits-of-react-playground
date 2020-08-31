@@ -8,16 +8,16 @@ import SEO from '../components/seo'
 
 function BlogIndex({ data, location }) {
   const siteTitle = data.site.siteMetadata.title
-  const mdxNodes = useMemo(
-    () =>
-      data.allMdx.nodes.map(post => ({
-        title: post.frontmatter.title,
-        tags: post.frontmatter.tags,
-        category: post.fields.category,
-        slug: post.fields.slug,
-      })),
-    [data]
-  )
+  const code = useMemo(() => {
+    const mdxNodes = data.allMdx.nodes.map(post => ({
+      title: post.frontmatter.title,
+      tags: post.frontmatter.tags,
+      category: post.fields.category,
+      slug: post.fields.slug,
+    }))
+    const gistNodes = data.github.viewer.gists.nodes
+    return [...mdxNodes, ...gistNodes]
+  }, [data])
   const {
     searchString,
     setSearchString,
@@ -25,7 +25,7 @@ function BlogIndex({ data, location }) {
     availableTags,
     activeTags,
     setActiveTags,
-  } = useSearch(mdxNodes)
+  } = useSearch(code)
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -76,6 +76,25 @@ export const pageQuery = graphql`
           title
           tags
         }
+      }
+    }
+    github {
+      viewer {
+        gists(last: 100) {
+          ...previewGist
+        }
+      }
+    }
+  }
+  fragment previewGist on GitHub_GistConnection {
+    nodes {
+      createdAt(toLocalDateString: true)
+      tags
+      description
+      title
+      slug
+      files {
+        name
       }
     }
   }
