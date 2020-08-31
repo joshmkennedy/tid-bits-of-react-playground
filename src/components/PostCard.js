@@ -2,20 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
 function PostCard({ post, className }) {
-  const { fields, frontmatter } = post
+  const { title, tags, category, slug } = post
   return (
     <div className={className}>
-      <Link to={`/${fields.category}`} className="category">
-        {fields.category}
+      <Link to={`/${category}`} className="category">
+        {category}
       </Link>
       <h3>
-        <Link style={{ boxShadow: `none` }} to={fields.slug}>
-          {frontmatter.title}
+        <Link style={{ boxShadow: `none` }} to={slug}>
+          {title}
         </Link>
       </h3>
       <ul className="tags">
-        {frontmatter.tags &&
-          frontmatter.tags.map(tag => (
+        {tags &&
+          tags.map(tag => (
             <li key={tag}>
               <span className="tag">{tag}</span>
             </li>

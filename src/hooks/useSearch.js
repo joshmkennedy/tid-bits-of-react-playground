@@ -17,9 +17,7 @@ export default function useSearch(posts) {
     return haystack.toLowerCase().includes(needle.toLowerCase())
   }
   function filterFn(post) {
-    const {
-      frontmatter: { title, tags },
-    } = post
+    const { title, tags } = post
 
     if (activeTags.length >= 1) {
       for (let i = 0; i < activeTags.length; i++) {
@@ -51,8 +49,8 @@ export default function useSearch(posts) {
   useEffect(() => {
     const filtered = posts.filter(filterFn)
     const tags = posts.reduce((tagList, post) => {
-      if (!post.frontmatter.tags) return tagList
-      return [...new Set([...tagList, ...post.frontmatter.tags])]
+      if (!post.tags) return tagList
+      return [...new Set([...tagList, ...post.tags])]
     }, [])
     setAvailableTags(tags)
     setFilteredPosts(filtered)
