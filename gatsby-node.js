@@ -71,7 +71,7 @@ exports.createPages = ({ graphql, actions }) => {
         const next = getNext(index, gists)
 
         createPage({
-          path: gistPath(gist.slug),
+          path: gist.slug,
           component: gistTemplate,
           context: {
             name: gist.name,
@@ -140,7 +140,7 @@ exports.createResolvers = ({ createResolvers }) => {
         type: 'String',
         resolve: source => {
           const slug = createGistSlug(source.files[0].name)
-          return slug
+          return gistPath(slug)
         },
       },
       tags: {
