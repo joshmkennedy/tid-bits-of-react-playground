@@ -14,7 +14,9 @@ export default function gistTemplate({ data }) {
         return (
           <div key={file.name}>
             <h3>{file.name}</h3>
-            <Snippet language={file.language.name.toLowerCase()}>
+            <Snippet
+              language={file.language && file.language.name.toLowerCase()}
+            >
               {file.text}
             </Snippet>
           </div>

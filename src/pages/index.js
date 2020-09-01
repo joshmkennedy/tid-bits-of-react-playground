@@ -43,7 +43,6 @@ function BlogIndex({ data, location }) {
         />
         <ul className="post-list">
           {filteredPosts.map(post => {
-            console.log(post.category)
             return (
               <li key={post.slug}>
                 <PostCard post={post} />

@@ -29,6 +29,10 @@ exports.createPages = ({ graphql, actions }) => {
             gists(last: 100) {
               nodes {
                 name
+                tags
+                description
+                category
+                slug
                 files {
                   name
                 }
@@ -45,7 +49,6 @@ exports.createPages = ({ graphql, actions }) => {
 
     // Create blog posts pages.
     const posts = result.data.allMdx.edges
-    const gists = result.data.github && result.data.github.viewer.gists.nodes
     posts.forEach((post, index) => {
       const previous = getPreviousInCategory(post, index, posts)
       const next = getNextInCategory(post, index, posts)
@@ -61,13 +64,14 @@ exports.createPages = ({ graphql, actions }) => {
       })
     })
 
+    const gists = result.data.github && result.data.github.viewer.gists.nodes
     gists &&
       gists.forEach((gist, index) => {
         const previous = getPrevious(index, gists)
         const next = getNext(index, gists)
-        const slug = createGistSlug(gist.files[0].name)
+
         createPage({
-          path: `/gists/${slug || gist.name}`,
+          path: gistPath(gist.slug),
           component: gistTemplate,
           context: {
             name: gist.name,
@@ -92,7 +96,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     })
 
     const category = getCategoryDirectory(node)
-
     createNodeField({
       name: `category`,
       node,
@@ -137,7 +140,7 @@ exports.createResolvers = ({ createResolvers }) => {
         type: 'String',
         resolve: source => {
           const slug = createGistSlug(source.files[0].name)
-          return `/gists/${slug}`
+          return slug
         },
       },
       tags: {
@@ -192,9 +195,15 @@ function getCategoryDirectory(node) {
 function createGistSlugFromNode(node) {}
 function createGistSlug(fileName) {
   if (!fileName) return null
-
-  const slug = fileName.split('.')[0]
+  const fileNameSansExt = fileName.split('.')[0]
+  const slug = fileNameSansExt
+    .toLowerCase()
+    .split(' ')
+    .join('-')
   return slug
+}
+function gistPath(slug) {
+  return `/gists/${slug}`
 }
 
 function gistDescription(raw) {
