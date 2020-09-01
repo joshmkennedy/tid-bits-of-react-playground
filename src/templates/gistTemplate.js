@@ -2,12 +2,24 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import SEO from '../components/seo'
+import { Snippet } from '../components/code'
 
 export default function gistTemplate({ data }) {
+  const { gist } = data.github.viewer
   return (
-    <Layout>
-      <h2>hello</h2>
-      <pre>{JSON.stringify(data.github.viewer.gist, null, 2)}</pre>
+    <Layout title={data.site.siteMetadata.title}>
+      <h2>{gist.title}</h2>
+      <p>{gist.description}</p>
+      {gist.files.map(file => {
+        return (
+          <div key={file.name}>
+            <h3>{file.name}</h3>
+            <Snippet language={file.language.name.toLowerCase()}>
+              {file.text}
+            </Snippet>
+          </div>
+        )
+      })}
     </Layout>
   )
 }
@@ -33,7 +45,7 @@ export const pageQuery = graphql`
             extension
             text
           }
-          name
+          title
           description
         }
       }

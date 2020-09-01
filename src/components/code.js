@@ -73,3 +73,20 @@ const CodeBlock = styled.pre`
     0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 `
+export const Snippet = ({ children, language }) => {
+  return (
+    <Highlight {...defaultProps} code={children} language={language}>
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <CodeBlock className={className} style={{ ...style }}>
+          {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span {...getTokenProps({ token, key })} />
+              ))}
+            </div>
+          ))}
+        </CodeBlock>
+      )}
+    </Highlight>
+  )
+}

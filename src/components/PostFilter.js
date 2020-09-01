@@ -30,7 +30,7 @@ function PostFilter({
         />
       </form>
       <ul>
-        {tags.map(tag => {
+        {tags.sort().map(tag => {
           return (
             <li key={tag}>
               <button
