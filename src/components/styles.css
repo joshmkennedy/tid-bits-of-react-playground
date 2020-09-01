@@ -1,9 +1,9 @@
 :root {
   --darkblue: #150e41;
-  --darkpurple: #4e3d5c;
-  --blue: #3f6686;
+  --darkpurple: hsl(273, 20%, 30%);
+  --blue: hsl(207, 36%, 39%);
   --olive: #659899;
-  --lightolive: #8ca7a0;
+  --lightolive: hsl(164, 13%, 60%);
   --sand: #e4ccbe;
   --lightsand: #f7eeea;
   --pink: #ac7880;
@@ -126,6 +126,16 @@ header a,
 footer a {
   color: var(--opposite-link-color);
 }
+
+code {
+  background: var(--sand);
+  color: var(--darkblue);
+  display: inline-block;
+  padding: 0 4px;
+  border-radius: 2px;
+  font-size: 0.9em;
+}
+
 button {
   border: 1px solid transparent;
   background: var(--button-bg);

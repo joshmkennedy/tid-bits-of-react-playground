@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'react-dom'
+import nightOwl from 'prism-react-renderer/themes/oceanicNext'
 import Highlight, { defaultProps } from 'prism-react-renderer'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 import styled from 'styled-components'
@@ -16,6 +16,7 @@ export const Code = ({ codeString, language, ...props }) => {
           scope={components}
           noInline={false}
           {...defaultProps}
+          theme={theme}
         >
           <LiveEditor />
           <LiveError />
@@ -28,7 +29,12 @@ export const Code = ({ codeString, language, ...props }) => {
     )
   } else {
     return (
-      <Highlight {...defaultProps} code={codeString} language={language}>
+      <Highlight
+        {...defaultProps}
+        theme={theme}
+        code={codeString}
+        language={language}
+      >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <CodeBlock className={className} style={{ ...style }}>
             {tokens.map((line, i) => (
@@ -75,7 +81,12 @@ const CodeBlock = styled.pre`
 `
 export const Snippet = ({ children, language }) => {
   return (
-    <Highlight {...defaultProps} code={children} language={language}>
+    <Highlight
+      {...defaultProps}
+      theme={theme}
+      code={children}
+      language={language}
+    >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <CodeBlock className={className} style={{ ...style }}>
           {tokens.map((line, i) => (
@@ -89,4 +100,110 @@ export const Snippet = ({ children, language }) => {
       )}
     </Highlight>
   )
+}
+
+const theme = {
+  plain: {
+    color: '#F5ECE9',
+    backgroundColor: '#150E41',
+  },
+  styles: [
+    {
+      types: ['changed'],
+      style: {
+        color: 'rgb(162, 191, 252)',
+        fontStyle: 'italic',
+      },
+    },
+    {
+      types: ['deleted'],
+      style: {
+        color: 'rgba(239, 83, 80, 0.56)',
+        fontStyle: 'italic',
+      },
+    },
+    {
+      types: ['inserted', 'attr-name'],
+      style: {
+        color: 'rgb(173, 219, 103)',
+        fontStyle: 'italic',
+      },
+    },
+    {
+      types: ['comment'],
+      style: {
+        color: 'hsl(248, 45%, 50%)',
+        fontStyle: 'italic',
+      },
+    },
+    {
+      types: ['string', 'url'],
+      style: {
+        color: 'hsl(164, 73%, 50%)',
+      },
+    },
+    {
+      types: ['variable'],
+      style: {
+        color: 'var(--sand)',
+      },
+    },
+    {
+      types: ['number'],
+      style: {
+        color: 'hsl(351, 54%, 57%)',
+      },
+    },
+    {
+      types: ['builtin', 'char', 'constant', 'function'],
+      style: {
+        color: 'hsl(351, 94%, 77%)',
+      },
+    },
+    {
+      // This was manually added after the auto-generation
+      // so that punctuations are not italicised
+      types: ['punctuation'],
+      style: {
+        color: 'hsl(273, 40%, 60%)',
+      },
+    },
+    {
+      types: ['selector', 'doctype'],
+      style: {
+        color: 'hsl(351, 94%, 77%)',
+        fontStyle: 'italic',
+      },
+    },
+    {
+      types: ['class-name'],
+      style: {
+        color: 'var(--sand)',
+      },
+    },
+    {
+      types: ['tag', 'operator', 'keyword'],
+      style: {
+        color: 'hsl(248, 55%, 70%)',
+      },
+    },
+    {
+      types: ['boolean'],
+      style: {
+        color: 'hsl(207, 76%, 49%)',
+      },
+    },
+    {
+      types: ['property'],
+      style: {
+        color: 'hsl(164, 53%, 60%)',
+      },
+    },
+    {
+      types: ['namespace'],
+      style: {
+        color: 'rgb(178, 204, 214)',
+      },
+    },
+  ],
 }
