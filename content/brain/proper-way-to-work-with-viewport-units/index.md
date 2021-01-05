@@ -1,7 +1,7 @@
 ---
 title: Proper Way To Work With Viewport Units
 date: '2021-01-05T13:50:24.179Z'
-tags: []
+tags: [js, css, mobile]
 ---
 
 To properly use vh units on the web because of safari we have to do some thing tricky due to safari's overlay ui.
