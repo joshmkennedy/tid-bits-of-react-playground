@@ -4,8 +4,7 @@ date: '2021-03-10T15:17:13.467Z'
 tags: ['Typescript', 'js', 'documentation', 'vscode']
 ---
 
-JSDoc + Typescript make for the coolest tool tips in VScode
-Below is a screenshot of a tool tip for a function that I wrote that explains perfectly what the function is and what it does. Ill never have to look back at that function to remember how use it.
+JSDoc + Typescript make for the coolest tool tips in VScode. Below is a screenshot of a tool tip for a function that I wrote that explains perfectly what the function is and what it does. I'll never have to look back at that function to remember how use it.
 
 ![vscode tool tip for a function I wrote that perfectly explains how to use the function](defineTypeFunctionToolTip.png)
 
