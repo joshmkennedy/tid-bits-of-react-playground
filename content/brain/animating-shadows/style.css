@@ -1,0 +1,31 @@
+.card {
+  transition: all 0.2s cubic-bezier(0.55, 0, 0.5, 1);
+  /* non animation stuff */
+  width: 150px;
+  height: 150px;
+  border-radius: 16px;
+  background: dodgerblue;
+  margin: 0 auto;
+}
+
+.card-1 {
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.4));
+}
+.card-1:hover {
+  filter: drop-shadow(0 -4px 20px rgba(0, 0, 0, 0.4));
+}
+
+.card-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgb(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.card-container span {
+  font-size: 24px;
+  display: block;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
