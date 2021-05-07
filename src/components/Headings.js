@@ -22,10 +22,7 @@ const LinkIcon = props => (
 )
 
 const heading = Tag => props => {
-  const id = props.children
-    .toLowerCase()
-    .split(' ')
-    .join('-')
+  const id = createIdFromHeading(props.children)
   return (
     <Tag {...props} id={id}>
       <a href={`#${id}`}>
@@ -43,4 +40,18 @@ export default {
   h4: heading(`h4`),
   h5: heading(`h5`),
   h6: heading(`h6`),
+}
+
+function createIdFromHeading(heading) {
+  if (typeof heading == 'string') {
+    return slugify(heading)
+  }
+  return slugify(heading.join(' '))
+}
+
+function slugify(string) {
+  return string
+    .toLowerCase()
+    .split(' ')
+    .join('-')
 }

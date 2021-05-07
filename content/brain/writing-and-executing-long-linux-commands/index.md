@@ -1,7 +1,7 @@
 ---
 title: writing and executing long linux commands
 date: '2021-03-15T14:17:54.751Z'
-tags: ['linux', 'bash']
+tags: [linux, bash]
 ---
 
 Some times you need to write a long and complicated linux command or script. It may not be worth writing a whole executable script for it, but its too long to just write in your terminal. Linux gives a way to write a command in an text editor, and then on save execute the script in the terminal.
