@@ -14,3 +14,5 @@ console.log(
 ```
 
 ![example log](example.png)
+
+This will only work in the browser. If you need styles in node check out [this](/brain/colorful-console-logs-in-node/).
