@@ -19,7 +19,7 @@ console.log(
 
 ![example of outputting green text](iamgreenexample.png)
 
-This is very gross and not readable, but here is whats going on. The first part `\x1b` is the escape sequence, telling the emulator your about to change the color (more or less to be honest im not exactly sure). The next part you declare the color `[32`. That apparently is green. Then the letter `m`, which means we are done declaring our color. Here is a [wikipedia article](https://en.wikipedia.org/wiki/ANSI_escape_code) that shows a full list of the codes. The next pare is `%s`, this is just putting a place holder for our text to go. The last part is `\x1b[0m`. We see we are declaring another escape sequence, and then its another color `[0m`. This is a reset. We are resetting the color back to the default.
+This is very gross and not readable, but here is whats going on. The first part `\x1b` is the escape sequence, telling the emulator your about to change the color (more or less to be honest im not exactly sure). The next part you declare the color `[32`. That apparently is green. Then the letter `m`, which means we are done declaring our color. Here is a [wikipedia article](https://en.wikipedia.org/wiki/ANSI_escape_code) that shows a full list of the codes. The next part is `%s`, this is just putting a place holder for our text to go. The last part is `\x1b[0m`. We see we are declaring another escape sequence, and then its another color `[0m`. This is a reset. We are resetting the color back to the default.
 
 What about background colors? We can also set a background color. Here is what that looks like.
 
