@@ -1,6 +1,6 @@
 ---
 title: Using find and sed to perform global search and replace
-date: '2022-09-019T14:58:53.907Z'
+date: '2022-08-22'
 tags: ['command line', 'tmux', 'linux', 'dev productivity']
 ---
 
