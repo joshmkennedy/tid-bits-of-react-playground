@@ -10,10 +10,10 @@ new temporary window named "Code" with command then navigates to it
 tmux neww -n Code "nvim ."\;
 ```
 
-new temporary window named "Code" with command then navigates to it
+new temporary window named "Code" with command then navigates to it sets cwd to `path/to/dir`
 
 ```bash
-tmux neww -c . -n Code "nvim ."\;
+tmux neww -c path/to/dir -n Code "nvim ."\;
 ```
 
 split the window named "tests"
