@@ -1,5 +1,5 @@
 ---
-title: Using find and sed to perform global search and replace
+title: Tmux Snippets
 date: '2022-08-22'
 tags: ['command line', 'tmux', 'linux', 'dev productivity']
 ---
