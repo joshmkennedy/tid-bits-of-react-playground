@@ -1,6 +1,6 @@
 ---
 title: Scroll Timeline Animation
-date: '2021-05-10T13:23:08.961Z'
+date: '2021-05-10T13:24:08.961Z'
 tags: ['css', 'no js', 'animation']
 ---
 
